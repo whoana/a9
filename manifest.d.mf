@@ -1,0 +1,100 @@
+Manifest-Version: 1.0
+Class-Path: file:/Users/whoana/DEV/workspace-vs/a9/target/classes/ file:
+ /Users/whoana/.m2/repository/org/springframework/boot/spring-boot-start
+ er-web/2.7.6-SNAPSHOT/spring-boot-starter-web-2.7.6-SNAPSHOT.jar file:/
+ Users/whoana/.m2/repository/org/springframework/boot/spring-boot-starte
+ r/2.7.6-SNAPSHOT/spring-boot-starter-2.7.6-SNAPSHOT.jar file:/Users/who
+ ana/.m2/repository/org/springframework/boot/spring-boot-starter-logging
+ /2.7.6-SNAPSHOT/spring-boot-starter-logging-2.7.6-SNAPSHOT.jar file:/Us
+ ers/whoana/.m2/repository/ch/qos/logback/logback-classic/1.2.11/logback
+ -classic-1.2.11.jar file:/Users/whoana/.m2/repository/ch/qos/logback/lo
+ gback-core/1.2.11/logback-core-1.2.11.jar file:/Users/whoana/.m2/reposi
+ tory/org/apache/logging/log4j/log4j-to-slf4j/2.17.2/log4j-to-slf4j-2.17
+ .2.jar file:/Users/whoana/.m2/repository/org/apache/logging/log4j/log4j
+ -api/2.17.2/log4j-api-2.17.2.jar file:/Users/whoana/.m2/repository/org/
+ slf4j/jul-to-slf4j/1.7.36/jul-to-slf4j-1.7.36.jar file:/Users/whoana/.m
+ 2/repository/jakarta/annotation/jakarta.annotation-api/1.3.5/jakarta.an
+ notation-api-1.3.5.jar file:/Users/whoana/.m2/repository/org/yaml/snake
+ yaml/1.30/snakeyaml-1.30.jar file:/Users/whoana/.m2/repository/org/spri
+ ngframework/boot/spring-boot-starter-json/2.7.6-SNAPSHOT/spring-boot-st
+ arter-json-2.7.6-SNAPSHOT.jar file:/Users/whoana/.m2/repository/com/fas
+ terxml/jackson/datatype/jackson-datatype-jdk8/2.13.4/jackson-datatype-j
+ dk8-2.13.4.jar file:/Users/whoana/.m2/repository/com/fasterxml/jackson/
+ datatype/jackson-datatype-jsr310/2.13.4/jackson-datatype-jsr310-2.13.4.
+ jar file:/Users/whoana/.m2/repository/com/fasterxml/jackson/module/jack
+ son-module-parameter-names/2.13.4/jackson-module-parameter-names-2.13.4
+ .jar file:/Users/whoana/.m2/repository/org/springframework/boot/spring-
+ boot-starter-tomcat/2.7.6-SNAPSHOT/spring-boot-starter-tomcat-2.7.6-SNA
+ PSHOT.jar file:/Users/whoana/.m2/repository/org/apache/tomcat/embed/tom
+ cat-embed-core/9.0.69/tomcat-embed-core-9.0.69.jar file:/Users/whoana/.
+ m2/repository/org/apache/tomcat/embed/tomcat-embed-el/9.0.69/tomcat-emb
+ ed-el-9.0.69.jar file:/Users/whoana/.m2/repository/org/apache/tomcat/em
+ bed/tomcat-embed-websocket/9.0.69/tomcat-embed-websocket-9.0.69.jar fil
+ e:/Users/whoana/.m2/repository/org/springframework/spring-web/5.3.24/sp
+ ring-web-5.3.24.jar file:/Users/whoana/.m2/repository/org/springframewo
+ rk/spring-beans/5.3.24/spring-beans-5.3.24.jar file:/Users/whoana/.m2/r
+ epository/org/springframework/spring-webmvc/5.3.24/spring-webmvc-5.3.24
+ .jar file:/Users/whoana/.m2/repository/org/springframework/spring-aop/5
+ .3.24/spring-aop-5.3.24.jar file:/Users/whoana/.m2/repository/org/sprin
+ gframework/spring-expression/5.3.24/spring-expression-5.3.24.jar file:/
+ Users/whoana/.m2/repository/org/springframework/boot/spring-boot-starte
+ r-websocket/2.7.6-SNAPSHOT/spring-boot-starter-websocket-2.7.6-SNAPSHOT
+ .jar file:/Users/whoana/.m2/repository/org/springframework/spring-messa
+ ging/5.3.24/spring-messaging-5.3.24.jar file:/Users/whoana/.m2/reposito
+ ry/org/springframework/spring-websocket/5.3.24/spring-websocket-5.3.24.
+ jar file:/Users/whoana/.m2/repository/org/springframework/boot/spring-b
+ oot-devtools/2.7.6-SNAPSHOT/spring-boot-devtools-2.7.6-SNAPSHOT.jar fil
+ e:/Users/whoana/.m2/repository/org/springframework/boot/spring-boot/2.7
+ .6-SNAPSHOT/spring-boot-2.7.6-SNAPSHOT.jar file:/Users/whoana/.m2/repos
+ itory/org/springframework/boot/spring-boot-autoconfigure/2.7.6-SNAPSHOT
+ /spring-boot-autoconfigure-2.7.6-SNAPSHOT.jar file:/Users/whoana/.m2/re
+ pository/org/springframework/spring-core/5.3.24/spring-core-5.3.24.jar 
+ file:/Users/whoana/.m2/repository/org/springframework/spring-jcl/5.3.24
+ /spring-jcl-5.3.24.jar file:/Users/whoana/.m2/repository/pep/per/mint-c
+ ommon/3.0.0/mint-common-3.0.0.jar file:/Users/whoana/.m2/repository/com
+ /fasterxml/jackson/core/jackson-core/2.13.4/jackson-core-2.13.4.jar fil
+ e:/Users/whoana/.m2/repository/com/fasterxml/jackson/core/jackson-annot
+ ations/2.13.4/jackson-annotations-2.13.4.jar file:/Users/whoana/.m2/rep
+ ository/com/fasterxml/jackson/core/jackson-databind/2.13.4.2/jackson-da
+ tabind-2.13.4.2.jar file:/Users/whoana/.m2/repository/org/apache/common
+ s/commons-lang3/3.12.0/commons-lang3-3.12.0.jar file:/Users/whoana/.m2/
+ repository/commons-io/commons-io/2.4/commons-io-2.4.jar file:/Users/who
+ ana/.m2/repository/org/springframework/spring-context/5.3.24/spring-con
+ text-5.3.24.jar file:/Users/whoana/.m2/repository/org/springframework/s
+ pring-context-support/5.3.24/spring-context-support-5.3.24.jar file:/Us
+ ers/whoana/.m2/repository/org/springframework/spring-jdbc/5.3.24/spring
+ -jdbc-5.3.24.jar file:/Users/whoana/.m2/repository/org/springframework/
+ spring-tx/5.3.24/spring-tx-5.3.24.jar file:/Users/whoana/.m2/repository
+ /org/springframework/spring-orm/5.3.24/spring-orm-5.3.24.jar file:/User
+ s/whoana/.m2/repository/org/aspectj/aspectjrt/1.9.7/aspectjrt-1.9.7.jar
+  file:/Users/whoana/.m2/repository/org/aspectj/aspectjweaver/1.9.7/aspe
+ ctjweaver-1.9.7.jar file:/Users/whoana/.m2/repository/org/slf4j/slf4j-a
+ pi/1.7.36/slf4j-api-1.7.36.jar file:/Users/whoana/.m2/repository/org/sl
+ f4j/jcl-over-slf4j/1.7.36/jcl-over-slf4j-1.7.36.jar file:/Users/whoana/
+ .m2/repository/xerces/xercesImpl/2.11.0/xercesImpl-2.11.0.jar file:/Use
+ rs/whoana/.m2/repository/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar f
+ ile:/Users/whoana/.m2/repository/commons-codec/commons-codec/1.15/commo
+ ns-codec-1.15.jar file:/Users/whoana/.m2/repository/apple/mint/a9-core/
+ 1.0/a9-core-1.0.jar file:/Users/whoana/.m2/repository/org/springframewo
+ rk/boot/spring-boot-starter-actuator/2.7.6-SNAPSHOT/spring-boot-starter
+ -actuator-2.7.6-SNAPSHOT.jar file:/Users/whoana/.m2/repository/org/spri
+ ngframework/boot/spring-boot-actuator-autoconfigure/2.7.6-SNAPSHOT/spri
+ ng-boot-actuator-autoconfigure-2.7.6-SNAPSHOT.jar file:/Users/whoana/.m
+ 2/repository/org/springframework/boot/spring-boot-actuator/2.7.6-SNAPSH
+ OT/spring-boot-actuator-2.7.6-SNAPSHOT.jar file:/Users/whoana/.m2/repos
+ itory/io/micrometer/micrometer-core/1.9.6/micrometer-core-1.9.6.jar fil
+ e:/Users/whoana/.m2/repository/org/hdrhistogram/HdrHistogram/2.1.12/Hdr
+ Histogram-2.1.12.jar file:/Users/whoana/.m2/repository/org/latencyutils
+ /LatencyUtils/2.0.3/LatencyUtils-2.0.3.jar file:/Users/whoana/.m2/repos
+ itory/org/springframework/cloud/spring-cloud-starter/3.1.3/spring-cloud
+ -starter-3.1.3.jar file:/Users/whoana/.m2/repository/org/springframewor
+ k/cloud/spring-cloud-context/3.1.3/spring-cloud-context-3.1.3.jar file:
+ /Users/whoana/.m2/repository/org/springframework/security/spring-securi
+ ty-crypto/5.7.5/spring-security-crypto-5.7.5.jar file:/Users/whoana/.m2
+ /repository/org/springframework/cloud/spring-cloud-commons/3.1.3/spring
+ -cloud-commons-3.1.3.jar file:/Users/whoana/.m2/repository/org/springfr
+ amework/security/spring-security-rsa/1.0.10.RELEASE/spring-security-rsa
+ -1.0.10.RELEASE.jar file:/Users/whoana/.m2/repository/org/bouncycastle/
+ bcpkix-jdk15on/1.68/bcpkix-jdk15on-1.68.jar file:/Users/whoana/.m2/repo
+ sitory/org/bouncycastle/bcprov-jdk15on/1.68/bcprov-jdk15on-1.68.jar
+

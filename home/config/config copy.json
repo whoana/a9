@@ -5,10 +5,11 @@
     "password": "",
     "classLoaderConfig": {
         "uriList": [
+            a9-impl-1.0-jar-with-dependencies
             "http://localhost:8080/mint/agent/v4/libs/a9-impl-1.0.jar",
-            "http://localhost:8080/mint/agent/v4/libs/jPowerShell-1.9.jar",
-            "http://localhost:8080/mint/agent/v4/libs/jProcesses-1.6.4.jar",
-            "http://localhost:8080/mint/agent/v4/libs/WMI4Java-1.6.1.jar"
+            "http://localhost:8080/mint/agent/v4/libs/jPowerShell-1.9",
+            "http://localhost:8080/mint/agent/v4/libs/WMI4Java-1.6.1",
+            "http://localhost:8080/mint/agent/v4/libs/jProcesses-1.6.4.jar"
         ]
     },
     "channelConfig": {

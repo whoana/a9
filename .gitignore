@@ -34,3 +34,7 @@ build/
 home/logs/a9.log
 home/logs/rosemary_23-11-2022_0.log
 home/logs/system.log
+makeinstall copy.sh
+home/lib
+
+home/a9-1.0.jar

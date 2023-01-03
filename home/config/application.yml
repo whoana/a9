@@ -7,11 +7,17 @@ logging:
     root: debug
 
 spring:
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+      poll-interval: "2s"
+      quiet-period: "1s"
   application:
     name: a9
   main:
     banner-mode: CONSOLE
-  
   messages:
     always-use-message-format: false
     basename: messages/error, messages/message
@@ -37,6 +43,8 @@ management:
     shutdown:
       enabled: true
     metrics:
+      enabled: true
+    restart:
       enabled: true
 ---
 spring:

@@ -1,0 +1,43 @@
+
+[AgentLauncher.java]
+    1. staic void initialize() 실행 :
+        1) config/agent.properties 로딩 
+            agentHome , agentId, agentCd, agentNm 
+        2) SpringApplication.run 실행 
+    2. agent service list
+        21  WS0021  에이전트클래스리로드 (AgentController.loadClass)
+        22	WS0022	파일배포
+        23	WS0023	파일조회
+        25	WS0025	에이전트 로그인 서비스
+        26	WS0026	에이전트 로그아웃 서비스
+        27	WS0027	CPU 리소스 로그 PUSH
+        28	WS0028	MEMORY 리소스 로그 PUSH
+        29	WS0029	DISK 리소스 로그 PUSH
+        30	WS0030	프로세스 로그 PUSH
+        31	WS0031	큐매니저로그 PUSH
+        32	WS0032	콘솔정지명령요청 서비스
+        33	WS0033	콘솔얼라이브체크요청 서비스
+        34	WS0034	시뮬레이터 실행        
+        43  WS0043  네트워크 상태 체크 로그 PUSH
+        44  WS0044  네트워크 상태 체크 대상 리스트 조회 
+        50	WS0050	엔드포인트 어뎁터 정보 PUSH
+
+		}else if(ServiceCodeConstant.WS0022.equalsIgnoreCase(serviceCd)){
+			req  = agentController.uploadFile(request);
+		}else if(ServiceCodeConstant.WS0023.equalsIgnoreCase(serviceCd)){
+			req  = agentController.getFileContents(request);
+		}else if(ServiceCodeConstant.WS0034.equalsIgnoreCase(serviceCd)){
+			req  = agentController.testCall(request);
+		}else if(ServiceCodeConstant.WS0051.equalsIgnoreCase(serviceCd)){
+			req  = mqObjectMonitorController.getMQList(request , agentController.getAgentInfo());
+		}else if(ServiceCodeConstant.WS0052.equalsIgnoreCase(serviceCd)){
+			req  = mqObjectMonitorController.getQList(request , agentController.getAgentInfo());
+		}else if(ServiceCodeConstant.WS0053.equalsIgnoreCase(serviceCd)){
+			req  = mqObjectMonitorController.pushQStatus(request);
+		}else if(ServiceCodeConstant.WS0054.equalsIgnoreCase(serviceCd)){
+			req  = agentController.getConfigFile(request);
+		}else if(ServiceCodeConstant.WS0044.equalsIgnoreCase(serviceCd)){
+			
+			//System.out.println(">>>>serviceCd:" + serviceCd + ", setNetstatCheckList:" + Util.toJSONPrettyString(request));
+			req  = agentController.setNetstatCheckList(request);	
+			
