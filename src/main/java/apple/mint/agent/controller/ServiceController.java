@@ -51,9 +51,12 @@ public class ServiceController {
     public @ResponseBody ComMessage<?, ?> startService(
             @RequestBody ComMessage<?, ?> comMessage,
             @PathVariable("serviceCd") String serviceCd) throws Exception {
-        serviceManager.executeService(serviceCd);
+        ComMessage<?, ?> res = serviceManager.executeService(serviceCd);
+        if (res != null)
+            return res;
         comMessage.setEndTime(Util.getFormatedDate("yyyyMMddHHmmssSSS"));
-        comMessage.setErrorCd("0");
+        comMessage.setErrorMsg("haveNoData!");
+        comMessage.setErrorCd("9");
         return comMessage;
     }
 
@@ -89,7 +92,7 @@ public class ServiceController {
     @PostMapping("/agent/v4/restart")
     public void restart() {
         serviceManager.stopServiceGroupAll();
-        //A9.restart();
+        // A9.restart();
         restartEndpoint.restart();
     }
 
