@@ -38,7 +38,7 @@ import apple.mint.agent.core.service.LogoutService;
 import apple.mint.agent.core.service.RestartAgentService;
 import apple.mint.agent.core.service.ServiceContext;
 import apple.mint.agent.core.service.ServiceManager;
-import pep.per.mint.common.msg.handler.ServiceCodeConstant;
+//import pep.per.mint.common.msg.handler.ServiceCodeConstant;
 
 @Configuration
 public class A9Config {
@@ -114,10 +114,10 @@ public class A9Config {
 		ServiceMapper mapper = new ServiceMapper();
 
 		mapper.setLoginService(
-				new LoginService("LoginService", ServiceCodeConstant.WS0025, agentCd, password, serviceContext,
+				new LoginService("LoginService", "WS0025", agentCd, password, serviceContext,
 						sendChannelWrapper, false));
 		mapper.setLogoutService(
-				new LogoutService("LogoutService", ServiceCodeConstant.WS0026, agentCd, serviceContext,
+				new LogoutService("LogoutService", "WS0026", agentCd, serviceContext,
 						sendChannelWrapper, false));
 
 		try {

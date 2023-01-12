@@ -3,5 +3,5 @@
     "agentCd": "AGENT01",
     "agentNm": "AGENT01",
     "password": "",
-    "settings": "http://localhost:8080/mint/agent/v4/KAI.settings.json" 
+    "settings": "http://localhost:8080/mint/agent/v4/MOEL.settings.json" 
 }

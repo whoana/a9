@@ -31,9 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
-home/logs/a9.log
-home/logs/rosemary_23-11-2022_0.log
-home/logs/system.log
+home/logs
 makeinstall copy.sh
 home/lib
 
