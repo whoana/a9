@@ -67,6 +67,17 @@
                 "disabled": false
             },
             {
+                "cd": "WS0049",
+                "name": "파일인터페이스체크서비스(고용노동부)",
+                "classPath": "",
+                "className": "apple.mint.agent.impl.service.push.WS0049Service",
+                "params": {
+                    "init.service.url": "http://127.0.0.1:8080/mint/op/agents/services/v4/moel/init?method=GET",
+                    "init.service.description": "파일인터페이스체크를 위한 기준정보 GET 서비스"
+                },
+                "disabled": false
+            },
+            {
                 "cd": "WS0050",
                 "name": "FooPushService",
                 "classPath": "",

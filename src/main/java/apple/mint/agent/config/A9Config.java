@@ -1,18 +1,13 @@
 package apple.mint.agent.config;
 
 import org.springframework.context.annotation.Configuration;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+ 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.net.URLConnection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,6 +73,8 @@ public class A9Config {
 
 		URLClassLoader classLoader = new URLClassLoader(new URL[] {}, Thread.currentThread().getContextClassLoader());
 
+		// Thread.currentThread().setContextClassLoader(classLoader);
+
 		String[] uriList = configManager.getSettings().getClassLoaderConfig().getUriList();
 
 		if (uriList == null || uriList.length == 0) {
@@ -103,6 +100,9 @@ public class A9Config {
 			@Autowired ServiceContext serviceContext,
 			@Autowired @Qualifier("implClassLoader") URLClassLoader implClassLoader)
 			throws Exception {
+		
+		// Thread.currentThread().setContextClassLoader(implClassLoader);
+
 		Config config = configManager.getConfig();
 		String agentCd = config.getAgentId();
 		String password = config.getPassword();
@@ -143,6 +143,9 @@ public class A9Config {
 			@Autowired ServiceContext serviceContext,
 			@Autowired RestartEndpoint restartEndpoint,
 			@Autowired @Qualifier("implClassLoader") URLClassLoader implClassLoader) {
+
+		// Thread.currentThread().setContextClassLoader(implClassLoader);
+
 		ServiceGroupConfig[] serviceGroupConfigs = configManager.getSettings().getServiceMapperConfig()
 				.getServiceGroupConfigs();
 		ServiceManager manager = new ServiceManager(serviceGroupConfigs, serviceMapper, sendChannelWrapper,
@@ -162,10 +165,14 @@ public class A9Config {
 
 	@Bean
 	public ClientChannel getClientChannel(
-			@Autowired @Qualifier("serviceMapper") ServiceMapper serviceMapper,
-			@Autowired @Qualifier("sendChannelWrapper") SendChannelWrapper sendChannelWrapper,
-			@Autowired @Qualifier("configManager") ConfigManager configManager) throws Exception {
+		@Autowired @Qualifier("serviceMapper") ServiceMapper serviceMapper,
+		@Autowired @Qualifier("sendChannelWrapper") SendChannelWrapper sendChannelWrapper,
+		@Autowired @Qualifier("configManager") ConfigManager configManager,
+		@Autowired @Qualifier("implClassLoader") URLClassLoader implClassLoader
+	) throws Exception {
 
+		// Thread.currentThread().setContextClassLoader(implClassLoader);
+		
 		String uri = configManager.getSettings().getChannelConfig().getUri();
 		String[] params = configManager.getSettings().getChannelConfig().getUriParameters();
 
