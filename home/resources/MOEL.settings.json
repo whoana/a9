@@ -49,6 +49,15 @@
         ],
         "serviceConfigs": [
             {
+                "cd": "WS0021",
+                "name": "ClassReloadService",
+                "description": "에이전트클래스리로드 서비스",
+                "classPath": "",
+                "className": "apple.mint.agent.impl.service.response.WS0021Service",
+                "params": {},
+                "disabled": false
+            },
+            {
                 "cd": "WS0030",
                 "name": "ProcessCheckService",
                 "description": "로컬환경에서 실행중인 프로세스 리스트 체크를 위한 서비스",
