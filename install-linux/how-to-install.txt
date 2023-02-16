@@ -1,0 +1,110 @@
+// ================================================
+// "A9에이전트" QUICK INSTALL GUIDE V1.0 FOR LINUX
+// ------------------------------------------------
+// since   : 2023.01
+// version : 1.0
+// subject : IIP A9에이전트 빠른 설치
+// ------------------------------------------------
+
+    본 문서는 IIP "A9에이전트"를 리눅스 환경에 배포 설치하는 방법을 설명합니다.
+"A9에이전트"는 설치된 로컬 환경의 "프로세스정상기동여부체크" 및 "파일인터페이스실행체크" 등 
+로컬 시스템에서 정볼르 수집하고 IIP 서버로 수집된 정보를 전달하는 역할을 수행합니다.
+
+[사전 확인 사항]
+    1.JVM("JDK1.8" 이상) 설치된 환경인지 및 JVM 설치 위치(JAVA_HOME) 확인이 필요합니다.
+    2.IIP 서버에 연결할 수 있도록 방화벽(제외) 작업이 되어 있는지 확인 필요합니다. 
+    3.IIP 서버가 시작 상태여야 합니다.("A9에이전트" 는 최초 기동 시 IIP 서버에 접속하여 설정 및 라이브러리를 가져옵니다.)
+    4.IIP 서버 애플리케이션 배포 위치에 "A9에이전트"가 참조하는 아래 라이브러리 및 세팅파일이 존재해 있어야 합니다.
+        [라이브러리]
+            "/mint/agent/v4/libs/mint-common-product-3.0.0.jar",
+            "/mint/agent/v4/libs/a9-impl-1.0.jar",
+            "/mint/agent/v4/libs/jPowerShell-1.9.jar",
+            "/mint/agent/v4/libs/jProcesses-1.6.4.jar",
+            "/mint/agent/v4/libs/WMI4Java-1.6.1.jar",
+            "/mint/agent/v4/libs/mint-agent-common-3.0.0.jar"
+        [settings 파일]
+            "/mint/agent/v4/MOEL.settings.json"
+
+[설치]
+    1."A9에이전트" 설치 파일 압축 해제하기 
+        tar 형식의 설치 파일을 설치를 원하는 위치에 압축 해제합니다.
+            tar -cvf a9.tar
+            예)
+                설치 위치를 다음과 같다고 가정합니다.
+                    /home/iip/
+                설치 위치에 설치 파일 "a9.tar" 을 위치 시킵니다.
+                    
+                설치 위치로 이동하여 파일을 압축 해제합니다.
+                cd /home/iip/
+                tar -xvf a9.tar
+
+    2."A9에이전트" 설정 파일 수정하기 
+        설치한 a9 home 위치로 이동하여 아래 설정 파일을 수정합니다.
+            [설정 파일]
+            {A9_HOME}/config/config.json
+            
+            파일 내용 중 설치하려는 "A9에이전트" 정보에 맞게 각각의 키 값에 대한 값 부분을 수정해 줍니다.
+                "agentId" --> 에이전트 아이디
+                "agentCd" --> 에이전트 CD
+                "agentNm" --> 에이전트 이름
+                "serverAddress" --> IIP 서버 IP
+                "serverPort"    --> IIP 서버 port
+                "settings"      --> {사이트코드}.settings.json 파일
+                            
+            예) config.json 편집 
+                {
+                    "agentId": "AG00000001", 
+                    "agentCd": "AGENT01",
+                    "agentNm": "AGENT01",
+                    "password": "",
+                    "serverAddress": "localhost",
+                    "serverPort": "8080",
+                    "settings": "/mint/agent/v4/MOEL.settings.json"
+                }
+
+    3.쉘 파일 수정하기
+        "A9에이전트" 시작 쉘 파일을 수정합니다.
+            [시작 쉘]
+            {A9_HOME}/bin/run.sh
+            위 시작 쉘 파일을 오픈하여 "JAVA_HOME" 과 "A9_HOME" 값을 설치 환경에 알맞는 값으로 변경해 줍니다.
+            "A9_HOME" 값은 "A9에이전트"가 설치된 루트 디렉토리로 설정합니다.
+            "JAVA_HOME" 값은 반드시 JAVA 1.8 이상의 버전을 설정해 주어야 합니다.
+
+        "A9에이전트" 종료 쉘 파일을 수정합니다.
+            [종료 쉘]
+            {A9_HOME}/bin/stop.sh
+            위 종료 쉘 파일을 오픈하여 "A9_HOME" 값을 설치 환경에 알맞는 값("A9에이전트"이 설치된 루트 디렉토리)으로 변경해 줍니다.
+
+        "A9에이전트" 시작 및 종료 쉘 파일에 실행 권한을 부여해 줍니다.
+            chmod +x {A9_HOME}/bin/run.sh
+            chmod +x {A9_HOME}/bin/stop.sh
+
+    4."A9에이전트" 실행하기
+        시작 쉘을 포그라운드 모드로 실행해보고 실행로그에 문제가 없는 지 체크해 봅니다.
+            {A9_HOME}/bin/run.sh -f
+            ...
+            ...
+            ...
+            2023-02-15 13:50:58.494  INFO 30547 --- [main] apple.mint.agent.A9 : Started A9 in 4.548 seconds (JVM running for 5.199)
+
+        포그라운드 실행 로그 상에 정상기동 로그 "... Started A9 ... " 가 출력되면 "Ctrl+C" 로 "A9에이전트"를 종료하고 
+        아래 백그라운드 모드로 실행하여 "A9에이전트"를 시작해 줍니다.
+        
+            {A9_HOME}/bin/run.sh
+
+        백그라운드로 실행된 "A9에이전트"의 로그는 아래 위치에서 확인가능합니다.
+
+            {A9_HOME}/logs/a9.log
+
+        "A9에이전트" 얼라이브체크는 curl 또는 브라우저를 통해 아래 URL 접속을 통해 수행 가능합니다.
+            
+            http://localhost:9090/agent/v4/alive
+            * 원격일 경우 localhost 대신 "A9에이전트"이 설치된 서버의 주소로 대체해 주십시오.
+
+        * IIP 서버가 실행중인 상태가 아닐 경우 "A9에이전트"를 시작시키면 아래 내용의 예외가 발생되며 "A9에이전트" 시작이 종료됩니다.
+        이 경우 IIP 서버가 실행 중인지 확인 후  "A9에이전트"를 시작해 주십시오.
+            [예외 로그]
+            "SystemException: [AESYS001] 서버가 실행 중이 아니거나 네트워크 연결에 문제가 있어 에이전트 실행을 진행할 수 없습니다. 
+            서버가 실행중인지 확인 후 다시 진행해주세요."
+        
+[끝]

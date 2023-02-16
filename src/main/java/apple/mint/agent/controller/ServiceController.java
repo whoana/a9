@@ -1,8 +1,11 @@
 package apple.mint.agent.controller;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,4 +69,9 @@ public class ServiceController {
         restartEndpoint.restart();
     }
 
+    @GetMapping("/agent/v4/alive")
+    public String iamalive(){
+        Date date = new Date();        
+        return "I am alive! it's ".concat(date.toString());
+    }
 }

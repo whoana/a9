@@ -84,4 +84,9 @@ DELETE FROM tsu0302 WHERE PACKAGE = 'inhouse.moel' AND attribute_id = 'file.inte
 SELECT * FROM tih0202;
 
 SELECT * FROM TIH0201 ;
+UPDATE TIH0201 SET MAX_FILE_COUNT  = 1;
+
+
+SELECT * FROM tim0214;
+
  

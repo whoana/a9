@@ -3,5 +3,7 @@
     "agentCd": "AGENT01",
     "agentNm": "AGENT01",
     "password": "",
-    "settings": "http://localhost:8080/mint/agent/v4/MOEL.settings.json" 
+    "serverAddress" :"localhost",
+    "serverPort" : "8080",
+    "settings": "/mint/agent/v4/MOEL.settings.json" 
 }
