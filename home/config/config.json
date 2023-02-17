@@ -1,6 +1,6 @@
 {
-    "agentId": "AGENT01",
-    "agentCd": "AGENT01",
+    "agentId": "",
+    "agentCd": "",
     "agentNm": "AGENT01",
     "password": "",
     "serverAddress" :"localhost",
