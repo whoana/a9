@@ -88,7 +88,7 @@ public class A9Config {
 		}
 
 		Config config = configManager.getConfig();
-		
+
 		String address = config.getServerAddress();
 		String port = config.getServerPort();
 		String serverAddress = "http://" + address + ":" + (Util.isEmpty(port) ? "80" : port);
@@ -143,7 +143,8 @@ public class A9Config {
 		return mapper;
 	}
 
-	@Bean(initMethod = "startServiceGroupAll")
+	//@Bean(initMethod = "startServiceGroupAll")
+	@Bean("serviceManager")
 	public ServiceManager getServiceManager(
 			@Autowired @Qualifier("configManager") ConfigManager configManager,
 			@Autowired @Qualifier("serviceMapper") ServiceMapper serviceMapper,
@@ -205,6 +206,7 @@ public class A9Config {
 
 	@Bean
 	public ClientChannel getClientChannel(
+			@Autowired @Qualifier("serviceManager") ServiceManager serviceManager,
 			@Autowired @Qualifier("serviceMapper") ServiceMapper serviceMapper,
 			@Autowired @Qualifier("sendChannelWrapper") SendChannelWrapper sendChannelWrapper,
 			@Autowired @Qualifier("configManager") ConfigManager configManager,
@@ -215,7 +217,7 @@ public class A9Config {
 		String uri = configManager.getSettings().getChannelConfig().getUri();
 		String address = configManager.getConfig().getServerAddress();
 		String port = configManager.getConfig().getServerPort();
-		port = Util.isEmpty(port) ? "80" : port;		
+		port = Util.isEmpty(port) ? "80" : port;
 		uri = "ws://" + address + ":" + port + uri;
 
 		String[] params = configManager.getSettings().getChannelConfig().getUriParameters();
@@ -226,6 +228,9 @@ public class A9Config {
 				uri,
 				params);
 		channel.start();
+ 
+		serviceManager.startServiceGroupAll();
+		 
 		return channel;
 	}
 

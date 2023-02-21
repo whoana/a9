@@ -38,6 +38,13 @@ public class A9 {
 		String iwannadie = System.getProperty("apple.mint.home", ".")
 								 .concat(File.separator)
 								 .concat("iwannadie.pid");
+		
+		// try {
+		// 	System.out.println("Iwannadie:" + iwannadie);
+		// 	Thread.sleep(5000);
+		// } catch (InterruptedException e) {
+		// }								 
+
 		sab.build().addListeners(new ApplicationPidFileWriter(iwannadie));
 		return sab;
 	}
