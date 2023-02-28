@@ -1,0 +1,13 @@
+version: '3.0'
+services:
+ a9:
+  container_name: a9container
+  image: adoptopenjdk/openjdk8
+  ports:
+   - 9090:9090
+  working_dir: /apps
+  environment:
+   - TZ=Asia/Seoul
+   - A9_HOME=/apps/a9
+  restart: always
+

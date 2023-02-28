@@ -1,6 +1,11 @@
 package apple.mint.agent.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,6 +67,72 @@ public class ServiceController {
         return comMessage;
     }
 
+    /**
+     * <pre>
+     *  고용노동부 파일 인터페이스 디렉토리 체크
+     *  결과 코드 : 메시지  
+     *      0 : 초기등록
+     *      1 : 확인완료
+     *      2 : 디렉토리없음
+     *      3 : 디렉토리아님
+     *      4 : 읽기권한없음
+     *      9 : 기타확인실패
+     * </pre>
+     * @param comMessage
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/agent/v4/services/moel/check/dirs", params = "method=GET", method = RequestMethod.POST)
+    public @ResponseBody ComMessage<?, ?> checkMoelInterfaceDir(
+            @RequestBody ComMessage<Map<String, String>, Map<String, String>> comMessage) throws Exception {
+
+        Map<String, String> params = comMessage.getRequestObject();
+        Map<String, String> res = new HashMap<String, String>();
+        // String integrationId = params.get("integrationId");
+        String directory = params.get("directory");
+        if (!Util.isEmpty(directory)) {
+ 
+            try {
+                Path path = Paths.get(directory);
+                boolean check = Files.exists(Paths.get(directory));
+                if (check) {
+                    boolean isDirectory = Files.isDirectory(path);
+                    if (!isDirectory) {
+                        res.put("confirmCd", "3");
+                        res.put("confirmMsg", "디렉토리아님");
+                    } else {
+                        boolean isReadable = Files.isReadable(path);
+                        if (!isReadable) {
+                            res.put("confirmCd", "4");
+                            res.put("confirmMsg", "읽기권한없음");
+                        } else {
+                            res.put("confirmCd", "1");
+                            res.put("confirmMsg", "확인완료");
+                        }
+                    }
+                } else {
+                    res.put("confirmCd", "2");
+                    res.put("confirmMsg", "디렉토리없음");
+                }
+                comMessage.setErrorCd("0");
+                comMessage.setErrorMsg("ok");
+            } catch (Exception e) {
+                res.put("confirmCd", "9");
+                res.put("confirmMsg", "기타확인실패");
+
+                comMessage.setErrorCd("9");
+                comMessage.setErrorMsg(e.getMessage());
+            }
+        } else {
+            comMessage.setErrorCd("9");
+            comMessage.setErrorMsg("체크할 디렉토리값이 null 입니다.");
+        }
+        comMessage.setResponseObject(res);
+        comMessage.setEndTime(Util.getFormatedDate("yyyyMMddHHmmssSSS"));
+
+        return comMessage;
+    }
+
     @PostMapping("/agent/v4/restart")
     public void restart() {
         serviceManager.stopServiceGroupAll();
@@ -70,8 +141,9 @@ public class ServiceController {
     }
 
     @GetMapping("/agent/v4/alive")
-    public String iamalive(){
-        Date date = new Date();        
+    public String iamalive() {
+        Date date = new Date();
         return "I am alive! it's ".concat(date.toString());
     }
+
 }

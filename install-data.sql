@@ -39,7 +39,9 @@ SELECT
    AND (a.CHECK_FILE_CD > '0' OR a.CHECK_ERR_FILE_CD > '0') -- 체크 코드가 '0' 보다큰 (에러인)
    AND b.DEL_YN = 'N'
  INNER JOIN TAN0201 c 
-    ON c.INTERFACE_ID = a.INTERFACE_ID
+    ON c.INTERFACE_ID = a.INTERFACE_ID;
+   
+   SELECT * FROM tih0202;
 
 --------------------------------------------------------
 -- 파일처리지연 로그 리스트 조회    
@@ -113,31 +115,28 @@ SELECT *
  INNER JOIN tim0205 b
     ON a.ITEM_ID  = b.PROCESS_ID
    AND a.AGENT_ID = 'AG00000001'
+   AND b.del_yn = 'N'
    
 ;
 
-SELECT * 
+SELECT a.* 
+  FROM TIM0205 a
+INNER JOIN tim0212 b
+  ON a.PROCESS_ID = b.ITEM_ID
+  AND b.AGENT_ID = 'AG00000001'
+  AND a.DEL_YN = 'N'
+ ;
+ 
+
+SELECT * FROM top0802 ORDER BY GET_DATE desc;
+
+SELECT *
   FROM TOP0802 a
 INNER JOIN TIM0205 b
 	ON a.PROCESS_ID  = b.PROCESS_ID 
+INNER JOIN tim0212 c
+	ON b.PROCESS_ID  = c.ITEM_ID 
+	AND c.ITEM_TYPE = '1'
+	AND c.AGENT_ID = 'AG00000001'	
 ORDER BY a.REG_DATE desc;
-
-
-
-
-SELECT * FROM tsu0302 WHERE PACKAGE = 'system';
-
-SELECT * FROM tim0212;
-
-SELECT * FROM tsu0205;
-SELECT * FROM top0810 ORDER BY GET_DATE  desc;
-SELECT * FROM TIM0211;
-
-SELECT * FROM tih0201;
-
-
-
-
-
-
-
+ 
