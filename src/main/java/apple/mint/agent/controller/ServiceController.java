@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.cloud.context.restart.RestartEndpoint;
 
+import apple.mint.agent.service.FileService;
 import apple.mint.agent.core.service.ServiceManager;
 import pep.per.mint.common.data.basic.ComMessage;
 import pep.per.mint.common.util.Util;
@@ -67,6 +68,8 @@ public class ServiceController {
         return comMessage;
     }
 
+    @Autowired
+    FileService fileService;
     /**
      * <pre>
      *  고용노동부 파일 인터페이스 디렉토리 체크
@@ -91,35 +94,13 @@ public class ServiceController {
         // String integrationId = params.get("integrationId");
         String directory = params.get("directory");
         if (!Util.isEmpty(directory)) {
- 
-            try {
-                Path path = Paths.get(directory);
-                boolean check = Files.exists(Paths.get(directory));
-                if (check) {
-                    boolean isDirectory = Files.isDirectory(path);
-                    if (!isDirectory) {
-                        res.put("confirmCd", "3");
-                        res.put("confirmMsg", "디렉토리아님");
-                    } else {
-                        boolean isReadable = Files.isReadable(path);
-                        if (!isReadable) {
-                            res.put("confirmCd", "4");
-                            res.put("confirmMsg", "읽기권한없음");
-                        } else {
-                            res.put("confirmCd", "1");
-                            res.put("confirmMsg", "확인완료");
-                        }
-                    }
-                } else {
-                    res.put("confirmCd", "2");
-                    res.put("confirmMsg", "디렉토리없음");
-                }
+            try {                
+                res = fileService.checkDir(directory);
                 comMessage.setErrorCd("0");
                 comMessage.setErrorMsg("ok");
             } catch (Exception e) {
                 res.put("confirmCd", "9");
                 res.put("confirmMsg", "기타확인실패");
-
                 comMessage.setErrorCd("9");
                 comMessage.setErrorMsg(e.getMessage());
             }
@@ -129,7 +110,6 @@ public class ServiceController {
         }
         comMessage.setResponseObject(res);
         comMessage.setEndTime(Util.getFormatedDate("yyyyMMddHHmmssSSS"));
-
         return comMessage;
     }
 
