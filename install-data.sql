@@ -139,4 +139,15 @@ INNER JOIN tim0212 c
 	AND c.ITEM_TYPE = '1'
 	AND c.AGENT_ID = 'AG00000001'	
 ORDER BY a.REG_DATE desc;
+
+
+ALTER TABLE TIH0201 ADD (confirm_cd varchar(5) default '0');
+ALTER TABLE TIH0201 ADD (confirm_msg varchar(4000));
+
+UPDATE tih0201 SET confirm_cd = '1', CONFIRM_MSG = '확인완료';
+
+COMMIT;
+
+SELECT * FROM tih0201;
+
  

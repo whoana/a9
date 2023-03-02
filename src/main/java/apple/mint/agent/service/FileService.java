@@ -18,21 +18,21 @@ public class FileService {
         if (check) {
             boolean isDirectory = Files.isDirectory(path);
             if (!isDirectory) {
-                res.put("confirmCd", "3");
-                res.put("confirmMsg", "디렉토리아님");
+                res.put("cd", "3");
+                res.put("msg", "디렉토리아님");
             } else {
                 boolean isReadable = Files.isReadable(path);
                 if (!isReadable) {
-                    res.put("confirmCd", "4");
-                    res.put("confirmMsg", "읽기권한없음");
+                    res.put("cd", "4");
+                    res.put("msg", "읽기권한없음");
                 } else {
-                    res.put("confirmCd", "1");
-                    res.put("confirmMsg", "확인완료");
+                    res.put("cd", "1");
+                    res.put("msg", "확인완료");
                 }
             }
         } else {
-            res.put("confirmCd", "2");
-            res.put("confirmMsg", "디렉토리없음");
+            res.put("cd", "2");
+            res.put("msg", "디렉토리없음");
         }
         return res;
     }

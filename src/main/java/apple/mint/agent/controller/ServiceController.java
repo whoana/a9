@@ -3,9 +3,11 @@ package apple.mint.agent.controller;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,6 +87,7 @@ public class ServiceController {
      * @return
      * @throws Exception
      */
+    /*
     @RequestMapping(value = "/agent/v4/services/moel/check/dirs", params = "method=GET", method = RequestMethod.POST)
     public @ResponseBody ComMessage<?, ?> checkMoelInterfaceDir(
             @RequestBody ComMessage<Map<String, String>, Map<String, String>> comMessage) throws Exception {
@@ -112,6 +115,51 @@ public class ServiceController {
         comMessage.setEndTime(Util.getFormatedDate("yyyyMMddHHmmssSSS"));
         return comMessage;
     }
+    */
+
+    @RequestMapping(value = "/agent/v4/services/moel/check/dirs", params = "method=GET", method = RequestMethod.POST)
+    public @ResponseBody ComMessage<List<Map<String, String>>, List<Map<String, String>>> checkMoelInterfaceDirs(
+            @RequestBody ComMessage<List<Map<String, String>>, List<Map<String, String>>> comMessage) throws Exception {
+
+        List<Map<String, String>> params = comMessage.getRequestObject();         
+        if(!Util.isEmpty(params)){
+            for (Map<String,String> map : params) {
+                String directory = map.get("directory");        
+                if (!Util.isEmpty(directory)) {
+                    try {                
+                        Map<String, String> res = fileService.checkDir(directory);
+                        map.put("confirmCd", res.get("cd"));
+                        map.put("confirmMsg", res.get("msg"));
+                    } catch (Exception e) {
+                        map.put("confirmCd", "9");
+                        map.put("confirmMsg", "기타확인실패:" + e.getMessage());
+                    }
+                } 
+                
+                String errorDirectory = map.get("errorDirectory");     
+                if (!Util.isEmpty(errorDirectory)) {
+                    try {                
+                        Map<String, String> res = fileService.checkDir(errorDirectory);
+                        map.put("confirmErrorCd", res.get("cd"));
+                        map.put("confirmErrorMsg", res.get("msg"));
+                    } catch (Exception e) {
+                        map.put("confirmErrorCd", "9");
+                        map.put("confirmErrorMsg", "기타확인실패:" + e.getMessage());
+                    }
+                }    
+            }
+            comMessage.setResponseObject(params);
+            comMessage.setErrorCd("0");
+            comMessage.setErrorMsg("OK");
+        }else{
+            comMessage.setErrorCd("9");
+            comMessage.setErrorMsg("체크할 디렉토리 리스트가 존재하지 않습니다.");
+        }
+        
+        comMessage.setEndTime(Util.getFormatedDate("yyyyMMddHHmmssSSS"));
+        return comMessage;
+    }
+
 
     @PostMapping("/agent/v4/restart")
     public void restart() {
