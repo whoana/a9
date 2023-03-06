@@ -72,6 +72,7 @@ public class ServiceController {
 
     @Autowired
     FileService fileService;
+
     /**
      * <pre>
      *  고용노동부 파일 인터페이스 디렉토리 체크
@@ -83,50 +84,54 @@ public class ServiceController {
      *      4 : 읽기권한없음
      *      9 : 기타확인실패
      * </pre>
+     * 
      * @param comMessage
      * @return
      * @throws Exception
      */
     /*
-    @RequestMapping(value = "/agent/v4/services/moel/check/dirs", params = "method=GET", method = RequestMethod.POST)
-    public @ResponseBody ComMessage<?, ?> checkMoelInterfaceDir(
-            @RequestBody ComMessage<Map<String, String>, Map<String, String>> comMessage) throws Exception {
-
-        Map<String, String> params = comMessage.getRequestObject();
-        Map<String, String> res = new HashMap<String, String>();
-        // String integrationId = params.get("integrationId");
-        String directory = params.get("directory");
-        if (!Util.isEmpty(directory)) {
-            try {                
-                res = fileService.checkDir(directory);
-                comMessage.setErrorCd("0");
-                comMessage.setErrorMsg("ok");
-            } catch (Exception e) {
-                res.put("confirmCd", "9");
-                res.put("confirmMsg", "기타확인실패");
-                comMessage.setErrorCd("9");
-                comMessage.setErrorMsg(e.getMessage());
-            }
-        } else {
-            comMessage.setErrorCd("9");
-            comMessage.setErrorMsg("체크할 디렉토리값이 null 입니다.");
-        }
-        comMessage.setResponseObject(res);
-        comMessage.setEndTime(Util.getFormatedDate("yyyyMMddHHmmssSSS"));
-        return comMessage;
-    }
-    */
+     * @RequestMapping(value = "/agent/v4/services/moel/check/dirs", params =
+     * "method=GET", method = RequestMethod.POST)
+     * public @ResponseBody ComMessage<?, ?> checkMoelInterfaceDir(
+     * 
+     * @RequestBody ComMessage<Map<String, String>, Map<String, String>> comMessage)
+     * throws Exception {
+     * 
+     * Map<String, String> params = comMessage.getRequestObject();
+     * Map<String, String> res = new HashMap<String, String>();
+     * // String integrationId = params.get("integrationId");
+     * String directory = params.get("directory");
+     * if (!Util.isEmpty(directory)) {
+     * try {
+     * res = fileService.checkDir(directory);
+     * comMessage.setErrorCd("0");
+     * comMessage.setErrorMsg("ok");
+     * } catch (Exception e) {
+     * res.put("confirmCd", "9");
+     * res.put("confirmMsg", "기타확인실패");
+     * comMessage.setErrorCd("9");
+     * comMessage.setErrorMsg(e.getMessage());
+     * }
+     * } else {
+     * comMessage.setErrorCd("9");
+     * comMessage.setErrorMsg("체크할 디렉토리값이 null 입니다.");
+     * }
+     * comMessage.setResponseObject(res);
+     * comMessage.setEndTime(Util.getFormatedDate("yyyyMMddHHmmssSSS"));
+     * return comMessage;
+     * }
+     */
 
     @RequestMapping(value = "/agent/v4/services/moel/check/dirs", params = "method=GET", method = RequestMethod.POST)
     public @ResponseBody ComMessage<List<Map<String, String>>, List<Map<String, String>>> checkMoelInterfaceDirs(
             @RequestBody ComMessage<List<Map<String, String>>, List<Map<String, String>>> comMessage) throws Exception {
 
-        List<Map<String, String>> params = comMessage.getRequestObject();         
-        if(!Util.isEmpty(params)){
-            for (Map<String,String> map : params) {
-                String directory = map.get("directory");        
+        List<Map<String, String>> params = comMessage.getRequestObject();
+        if (!Util.isEmpty(params)) {
+            for (Map<String, String> map : params) {
+                String directory = map.get("directory");
                 if (!Util.isEmpty(directory)) {
-                    try {                
+                    try {
                         Map<String, String> res = fileService.checkDir(directory);
                         map.put("confirmCd", res.get("cd"));
                         map.put("confirmMsg", res.get("msg"));
@@ -134,32 +139,32 @@ public class ServiceController {
                         map.put("confirmCd", "9");
                         map.put("confirmMsg", "기타확인실패:" + e.getMessage());
                     }
-                } 
-                
-                String errorDirectory = map.get("errorDirectory");     
+                }
+
+                String errorDirectory = map.get("errDirectory");
                 if (!Util.isEmpty(errorDirectory)) {
-                    try {                
+                    try {
                         Map<String, String> res = fileService.checkDir(errorDirectory);
-                        map.put("confirmErrorCd", res.get("cd"));
-                        map.put("confirmErrorMsg", res.get("msg"));
+                        map.put("confirmErrCd", res.get("cd"));
+                        map.put("confirmErrMsg", res.get("msg"));
                     } catch (Exception e) {
-                        map.put("confirmErrorCd", "9");
-                        map.put("confirmErrorMsg", "기타확인실패:" + e.getMessage());
+                        map.put("confirmErrCd", "9");
+                        map.put("confirmErrMsg", "기타확인실패:" + e.getMessage());
                     }
-                }    
+                }
             }
+            comMessage.setRequestObject(null);
             comMessage.setResponseObject(params);
             comMessage.setErrorCd("0");
             comMessage.setErrorMsg("OK");
-        }else{
+        } else {
             comMessage.setErrorCd("9");
             comMessage.setErrorMsg("체크할 디렉토리 리스트가 존재하지 않습니다.");
         }
-        
+
         comMessage.setEndTime(Util.getFormatedDate("yyyyMMddHHmmssSSS"));
         return comMessage;
     }
-
 
     @PostMapping("/agent/v4/restart")
     public void restart() {
