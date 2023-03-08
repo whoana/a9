@@ -10,6 +10,8 @@ RUN_CMD="${RUN_CMD} -Dapp.name=applemint"
 RUN_CMD="${RUN_CMD} -Dapple.mint.home=${A9_HOME}"
 RUN_CMD="${RUN_CMD} -Dspring.profiles.active=${ACTIVE_PROFILE}"
 RUN_CMD="${RUN_CMD} -Dspring.config.location=${A9_HOME}/config/application.yml"
+RUN_CMD="${RUN_CMD} -Dtry.config.delay=10000"
+RUN_CMD="${RUN_CMD} -Dmax.config.count=5"
 RUN_CMD="${RUN_CMD} -jar ${A9_HOME}/a9-1.0.jar"
 
 arg1=$1

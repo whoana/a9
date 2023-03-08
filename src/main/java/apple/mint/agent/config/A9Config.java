@@ -42,15 +42,32 @@ public class A9Config {
 	Logger logger = LoggerFactory.getLogger(A9Config.class);
 
 	static final String AGT_ERR_MSG_SYS_001 = "[AESYS001] 서버가 실행 중이 아니거나 네트워크 연결에 문제가 있어 에이전트 실행을 진행할 수 없습니다. 서버가 실행중인지 확인 후 다시 진행해주세요.";
+	static final String AGT_ERR_MSG_SYS_002 = "[AESYS002] 환경설정에 문제가 있어 에이전트 실행을 진행할 수 없습니다.";
 
+	static int tryConfigDelay = 10 * 1000;
+	static int tryConfigCount = 1;
+	static int maxTryConfigCount = 3;
 	@Bean("configManager")
 	public ConfigManager getConfigManager() throws Exception {
-		try {
-			ConfigManager cm = new ConfigManager();
-			cm.prepare();
-			return cm;
-		} catch (ConnectException e) {
-			throw new SystemException(AGT_ERR_MSG_SYS_001, e);
+
+		tryConfigDelay = Integer.parseInt(System.getProperty("try.config.delay", "10000"));
+		maxTryConfigCount = Integer.parseInt(System.getProperty("max.config.count", "1000000"));
+		
+
+		ConfigManager cm = new ConfigManager();
+		while(true){
+			try {
+				cm.prepare();
+				return cm;
+			} catch (ConnectException e){
+				logger.error("try getConfigManager: " + tryConfigCount, e);
+				if(tryConfigCount >= maxTryConfigCount) throw new SystemException(AGT_ERR_MSG_SYS_001, e);
+			} catch (Exception e) {
+				logger.error("try getConfigManager: " + tryConfigCount, e);
+				if(tryConfigCount >= maxTryConfigCount) throw new SystemException(AGT_ERR_MSG_SYS_002, e);
+			}			
+			tryConfigCount ++;
+			Thread.sleep(tryConfigDelay);
 		}
 	}
 

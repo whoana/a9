@@ -57,6 +57,19 @@ public class ServiceController {
         return comMessage;
     }
 
+    @RequestMapping(value = "/agent/v4/services/restart/{groupId}", params = "method=GET", method = RequestMethod.POST)
+    public @ResponseBody ComMessage<?, ?> restartServiceGroup(
+            @RequestBody ComMessage<?, ?> comMessage,
+            @PathVariable("groupId") String groupId
+    ) {
+        
+        serviceManager.stopServiceGroup(groupId);        
+        serviceManager.startServiceGroup(groupId);
+        comMessage.setEndTime(Util.getFormatedDate("yyyyMMddHHmmssSSS"));
+        comMessage.setErrorCd("0");
+        return comMessage;
+    }
+
     @RequestMapping(value = "/agent/v4/services/start/{serviceCd}", params = "method=GET", method = RequestMethod.POST)
     public @ResponseBody ComMessage<?, ?> startService(
             @RequestBody ComMessage<?, ?> comMessage,
@@ -67,6 +80,23 @@ public class ServiceController {
         comMessage.setEndTime(Util.getFormatedDate("yyyyMMddHHmmssSSS"));
         comMessage.setErrorMsg("haveNoData!");
         comMessage.setErrorCd("9");
+        return comMessage;
+    }
+
+    @RequestMapping(value = "/agent/v4/services/reset/{serviceCd}", params = "method=GET", method = RequestMethod.POST)
+    public @ResponseBody ComMessage<?, ?> resetService(
+            @RequestBody ComMessage<?, ?> comMessage,
+            @PathVariable("serviceCd") String serviceCd) throws Exception {        
+        try{
+            serviceManager.resetService(serviceCd);
+            comMessage.setErrorMsg("The service[" + serviceCd + "] resetting done!");
+            comMessage.setErrorCd("0");
+        }catch(Exception e){
+            comMessage.setErrorMsg(e.getLocalizedMessage());
+            comMessage.setErrorCd("9");
+        }finally{
+            comMessage.setEndTime(Util.getFormatedDate("yyyyMMddHHmmssSSS"));
+        }
         return comMessage;
     }
 
