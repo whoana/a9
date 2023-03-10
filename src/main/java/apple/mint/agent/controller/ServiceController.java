@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.cloud.context.restart.RestartEndpoint;
 
 import apple.mint.agent.service.FileService;
+import apple.mint.agent.core.channel.ClientChannel;
 import apple.mint.agent.core.service.ServiceManager;
 import pep.per.mint.common.data.basic.ComMessage;
 import pep.per.mint.common.util.Util;
@@ -32,6 +33,9 @@ import pep.per.mint.common.util.Util;
 @RestController
 public class ServiceController {
     Logger logger = LoggerFactory.getLogger(ServiceController.class);
+
+    @Autowired
+    ClientChannel channel;
 
     @Autowired
     ServiceManager serviceManager;
@@ -60,10 +64,9 @@ public class ServiceController {
     @RequestMapping(value = "/agent/v4/services/restart/{groupId}", params = "method=GET", method = RequestMethod.POST)
     public @ResponseBody ComMessage<?, ?> restartServiceGroup(
             @RequestBody ComMessage<?, ?> comMessage,
-            @PathVariable("groupId") String groupId
-    ) {
-        
-        serviceManager.stopServiceGroup(groupId);        
+            @PathVariable("groupId") String groupId) {
+
+        serviceManager.stopServiceGroup(groupId);
         serviceManager.startServiceGroup(groupId);
         comMessage.setEndTime(Util.getFormatedDate("yyyyMMddHHmmssSSS"));
         comMessage.setErrorCd("0");
@@ -86,15 +89,15 @@ public class ServiceController {
     @RequestMapping(value = "/agent/v4/services/reset/{serviceCd}", params = "method=GET", method = RequestMethod.POST)
     public @ResponseBody ComMessage<?, ?> resetService(
             @RequestBody ComMessage<?, ?> comMessage,
-            @PathVariable("serviceCd") String serviceCd) throws Exception {        
-        try{
+            @PathVariable("serviceCd") String serviceCd) throws Exception {
+        try {
             serviceManager.resetService(serviceCd);
             comMessage.setErrorMsg("The service[" + serviceCd + "] resetting done!");
             comMessage.setErrorCd("0");
-        }catch(Exception e){
+        } catch (Exception e) {
             comMessage.setErrorMsg(e.getLocalizedMessage());
             comMessage.setErrorCd("9");
-        }finally{
+        } finally {
             comMessage.setEndTime(Util.getFormatedDate("yyyyMMddHHmmssSSS"));
         }
         return comMessage;
@@ -200,6 +203,7 @@ public class ServiceController {
     public void restart() {
         serviceManager.stopServiceGroupAll();
         // A9.restart();
+        channel.stop();
         restartEndpoint.restart();
     }
 
