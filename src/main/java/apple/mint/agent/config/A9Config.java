@@ -1,8 +1,5 @@
 package apple.mint.agent.config;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.ConnectException;
@@ -12,27 +9,25 @@ import java.net.URLClassLoader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cloud.context.restart.RestartEndpoint;
 import org.springframework.context.annotation.Bean;
 
+import pep.per.mint.common.util.Util;
 import apple.mint.agent.core.channel.ClientChannel;
 import apple.mint.agent.core.channel.SendChannelWrapper;
-
 import apple.mint.agent.core.config.Config;
 import apple.mint.agent.core.config.ConfigManager;
-
 import apple.mint.agent.core.config.ServiceConfig;
 import apple.mint.agent.core.config.ServiceGroupConfig;
 import apple.mint.agent.core.config.ServiceMapperConfig;
 import apple.mint.agent.core.config.Settings;
 import apple.mint.agent.core.service.ServiceMapper;
 import apple.mint.agent.exception.SystemException;
-import pep.per.mint.common.util.Util;
 import apple.mint.agent.core.service.LoginService;
 import apple.mint.agent.core.service.LogoutService;
-import apple.mint.agent.core.service.RestartAgentService;
 import apple.mint.agent.core.service.ServiceContext;
 import apple.mint.agent.core.service.ServiceManager;
 
@@ -91,8 +86,6 @@ public class A9Config {
 
 		URLClassLoader classLoader = new URLClassLoader(new URL[] {}, Thread.currentThread().getContextClassLoader());
 
-		// Thread.currentThread().setContextClassLoader(classLoader);
-
 		String[] uriList = configManager.getSettings().getClassLoaderConfig().getUriList();
 
 		if (uriList == null || uriList.length == 0) {
@@ -124,8 +117,6 @@ public class A9Config {
 			@Autowired ServiceContext serviceContext,
 			@Autowired @Qualifier("implClassLoader") URLClassLoader implClassLoader)
 			throws Exception {
-
-		// Thread.currentThread().setContextClassLoader(implClassLoader);
 
 		Config config = configManager.getConfig();
 		serviceContext.setServerAddress(config.getServerAddress());
@@ -160,64 +151,14 @@ public class A9Config {
 		return mapper;
 	}
 
-	// @Bean(initMethod = "startServiceGroupAll")
 	@Bean("serviceManager")
 	public ServiceManager getServiceManager(
 			@Autowired @Qualifier("configManager") ConfigManager configManager,
 			@Autowired @Qualifier("serviceMapper") ServiceMapper serviceMapper,
 			@Autowired @Qualifier("sendChannelWrapper") SendChannelWrapper sendChannelWrapper,
-			@Autowired ServiceContext serviceContext,
-			@Autowired RestartEndpoint restartEndpoint,
 			@Autowired @Qualifier("implClassLoader") URLClassLoader implClassLoader) {
-
-		// Thread.currentThread().setContextClassLoader(implClassLoader);
-
-		ServiceGroupConfig[] serviceGroupConfigs = configManager.getSettings().getServiceMapperConfig()
-				.getServiceGroupConfigs();
-		ServiceManager serviceManager = new ServiceManager(serviceGroupConfigs, serviceMapper, sendChannelWrapper,
-				implClassLoader);
-
-		serviceContext.setRestartAgentService(
-				new RestartAgentService() {
-					apple.mint.agent.core.service.RestServiceClient rest = new apple.mint.agent.core.service.RestServiceClient();
-
-					@Override
-					public void restart() throws Exception {
-						// serviceManager.stopServiceGroupAll();
-						// serviceManager.clearServiceGroups();
-						// implClassLoader.close();
-
-						new Thread(new Runnable() {
-							@Override
-							public void run() {
-								RestTemplate restTemplate = new RestTemplate();
-								// restTemplate.getMessageConverters().add(0, new
-								// MappingJackson2HttpMessageConverter());
-								// headers.setContentType(new MediaType("application", "json",
-								// Charset.forName(httpMessageConverterCharset)));
-
-								restTemplate.postForObject("http://localhost:9090/agent/v4/restart", null,
-										Object.class);
-							}
-						}).start();
-						// A9.restart();
-						// // async call
-						// new Thread(new Runnable() {
-
-						// @Override
-						// public void run() {
-						// try {
-						// //restartEndpoint.restart();
-						// A9.restart();
-						// } catch (Exception e) {
-						// logger.error("AgentRestartException:", e);
-						// }
-						// }
-
-						// }).start();
-					}
-				});
-
+		ServiceGroupConfig[] serviceGroupConfigs = configManager.getSettings().getServiceMapperConfig().getServiceGroupConfigs();
+		ServiceManager serviceManager = new ServiceManager(serviceGroupConfigs, serviceMapper, sendChannelWrapper, implClassLoader);
 		return serviceManager;
 	}
 
@@ -228,26 +169,19 @@ public class A9Config {
 			@Autowired @Qualifier("sendChannelWrapper") SendChannelWrapper sendChannelWrapper,
 			@Autowired @Qualifier("configManager") ConfigManager configManager,
 			@Autowired @Qualifier("implClassLoader") URLClassLoader implClassLoader) throws Exception {
-
-		// Thread.currentThread().setContextClassLoader(implClassLoader);
-
 		String uri = configManager.getSettings().getChannelConfig().getUri();
 		String address = configManager.getConfig().getServerAddress();
 		String port = configManager.getConfig().getServerPort();
 		port = Util.isEmpty(port) ? "80" : port;
 		uri = "ws://" + address + ":" + port + uri;
-
 		String[] params = configManager.getSettings().getChannelConfig().getUriParameters();
-
 		ClientChannel channel = new ClientChannel(
 				serviceMapper,
 				sendChannelWrapper,
 				uri,
 				params);
 		channel.start();
-
 		serviceManager.startServiceGroupAll();
-
 		return channel;
 	}
 

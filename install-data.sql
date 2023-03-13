@@ -155,9 +155,22 @@ UPDATE tih0201 SET AGENT_ID = ''
 
 
 SELECT * FROM tsu0205 WHERE service_type = '3';
+
+UPDATE tsu0205 SET USE_YN = 'N' WHERE SERVICE_CD IN ('WS0020', 'WS0021');
+COMMIT;
 SELECT * FROM TIM0211;
 SELECT * FROM TIM0213;
 SELECT * FROM tsu0204;
 SELECT * FROM tsu0206;
 SELECT * FROM tsu0207;
- 
+
+
+
+SELECT * FROM TSU0302 WHERE ATTRIBUTE_ID = 'websocket.container';
+------------------------------------------------------------------------------------------------------------------------------------
+-- PACKAGE	ATTRIBUTE_ID			IDX		ATTRIBUTE_NM			ATTRIBUTE_VALUE		COMMENTS							DEL_YN	
+------------------------------------------------------------------------------------------------------------------------------------
+-- system	websocket.container		1		websocket.container		Tomcat				웹소켓컨테이너제품유형(웹소켓사용시 필수값)			N	
+
+SELECT * FROM tsu0205 WHERE service_type = '3'; 
+UPDATE tsu0205 SET USE_YN = 'N' WHERE SERVICE_CD IN ('WS0020', 'WS0021');
