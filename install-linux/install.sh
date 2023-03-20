@@ -84,7 +84,7 @@ sleep 1
 
 echo "------------------------------------------------------------------------------------------"
 echo "에이전트이름을 입력해 주십시오."
-echo "에이전트이름은 IIP서버에 등록한 값입니다."
+echo "에이전트이름은 IIP서버에 등록할(한) 값입니다."
 echo "에이전트이름을 모를 경우 확인 후 진행해 주십시오."
 echo "------------------------------------------------------------------------------------------"
 echo "AGENT_NM:"
@@ -92,6 +92,18 @@ read AGENT_NM
 if [ -z $AGENT_NM ]; then
 	echo "require AGENT_NM"
 	exit
+fi
+
+echo "------------------------------------------------------------------------------------------"
+echo "에이전트포트를 입력해 주십시오."
+echo "에이전트포트는 IIP서버에 등록할(한) 값입니다."
+echo "에이전트포트를 모를 경우 확인 후 진행해 주십시오."
+echo "------------------------------------------------------------------------------------------"
+echo "AGENT_PORT(Enter:9090):"
+read AGENT_PORT
+if [ -z $AGENT_PORT ]; then
+	echo "use default port: 9090"
+	AGENT_PORT=9090
 fi
 
 echo "------------------------------------------------------------------------------------------"
@@ -118,6 +130,11 @@ if [ -e $A9_HOME/config/config.json ]; then
 	rm $A9_HOME/config/config.json
 fi
 awk '{gsub("AGENTNM", "'$AGENT_NM'", $0); gsub("SERVERADDRESS", "'$SERVER_IP'", $0); gsub("SERVERPORT", "'$SERVER_PORT'", $0); print}' $A9_HOME/tpl/config.json.tpl > $A9_HOME/config/config.json
+
+if [ -e $A9_HOME/config/application.yml ]; then
+	rm $A9_HOME/config/application.yml
+fi
+awk '{gsub("AGENTPORT", "'$AGENT_PORT'", $0); print}' $A9_HOME/tpl/application.yml.tpl > $A9_HOME/config/application.yml
 
 rm -R $A9_HOME/tpl
 

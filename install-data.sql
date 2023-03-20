@@ -149,7 +149,7 @@ UPDATE tih0201 SET confirm_cd = '1', CONFIRM_MSG = '확인완료';
 COMMIT;
 
 SELECT * FROM tih0201;
-SELECT * FROM tih0202;
+SELECT * FROM tih0202 ORDER BY check_date desc;
 
 UPDATE tih0201 SET AGENT_ID = ''
 
