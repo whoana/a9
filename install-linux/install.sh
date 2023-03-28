@@ -67,6 +67,18 @@ else
 	exit
 fi
 
+echo "------------------------------------------------------------------------------------------"
+echo "LOG_HOME 환경변수를 세팅해 주십시오."
+echo "A9에이전트가 로그파일을 기록하는 디렉토리를 의미합니다."
+echo "지정하지 않으면(Enter) A9_HOME/logs[$A9_HOME/logs] 폴더에 기록합니다."
+echo "------------------------------------------------------------------------------------------"
+echo "LOG_HOME:"
+read LOG_HOME
+if [ -z $LOG_HOME ]; then
+	LOG_HOME=$A9_HOME/logs
+fi
+echo "LOG_HOME: $LOG_HOME"
+
 if [ -e $A9_HOME/bin/run.sh ]; then
 	rm $A9_HOME/bin/run.sh
 fi
@@ -75,7 +87,7 @@ if [ -e $A9_HOME/bin/run.sh ]; then
 	rm $A9_HOME/bin/stop.sh
 fi
 
-awk '{gsub("YOURA9HOME", "'$A9_HOME'", $0); gsub("YOURJAVAHOME", "'$JAVA_HOME'", $0); print}' $A9_HOME/tpl/run.sh.tpl > $A9_HOME/bin/run.sh
+awk '{gsub("YOURA9HOME", "'$A9_HOME'", $0); gsub("YOURJAVAHOME", "'$JAVA_HOME'", $0); gsub("YOURLOGHOME", "'$LOG_HOME'", $0); print}' $A9_HOME/tpl/run.sh.tpl > $A9_HOME/bin/run.sh
 awk '{gsub("YOURA9HOME", "'$A9_HOME'", $0); print}' $A9_HOME/tpl/stop.sh.tpl > $A9_HOME/bin/stop.sh
 chmod +x $A9_HOME/bin/*.sh
 
@@ -93,6 +105,7 @@ if [ -z $AGENT_NM ]; then
 	echo "require AGENT_NM"
 	exit
 fi
+echo "AGENT_NM: $AGENT_NM"
 
 echo "------------------------------------------------------------------------------------------"
 echo "에이전트포트를 입력해 주십시오."
@@ -105,6 +118,7 @@ if [ -z $AGENT_PORT ]; then
 	echo "use default port: 9090"
 	AGENT_PORT=9090
 fi
+echo "AGENT_PORT: $AGENT_PORT"
 
 echo "------------------------------------------------------------------------------------------"
 echo "IIP SERVER ADDRESS를 입력해 주십시오."
@@ -115,6 +129,7 @@ if [ -z $SERVER_IP ]; then
 	echo "require IIP_SERVER_ADDRESS"
 	exit
 fi
+echo "IIP_SERVER_ADDRESS: $IIP_SERVER_ADDRESS"
 
 echo "------------------------------------------------------------------------------------------"
 echo "IIP SERVER PORT를 입력해 주십시오."
@@ -125,6 +140,7 @@ if [ -z $SERVER_PORT ]; then
 	echo "require IIP_SERVER_PORT"
 	exit
 fi
+echo "SERVER_PORT: $SERVER_PORT"
 
 if [ -e $A9_HOME/config/config.json ]; then
 	rm $A9_HOME/config/config.json
