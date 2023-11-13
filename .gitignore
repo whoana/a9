@@ -31,8 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
-home/logs
-makeinstall copy.sh
-home/lib
-
-home/a9-1.0.jar
+home
+lib
+install-linux
+install-linux-backup
+.DS_Store
+a9-install.tar
+install-linux/a9-install.tar

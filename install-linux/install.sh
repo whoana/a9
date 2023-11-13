@@ -79,12 +79,15 @@ if [ -z $LOG_HOME ]; then
 fi
 echo "LOG_HOME: $LOG_HOME"
 
-if [ -e $A9_HOME/bin/run.sh ]; then
-	rm $A9_HOME/bin/run.sh
-fi
-
-if [ -e $A9_HOME/bin/run.sh ]; then
-	rm $A9_HOME/bin/stop.sh
+if [ -d $A9_HOME/bin ]; then
+	if [ -e $A9_HOME/bin/run.sh ]; then
+		rm $A9_HOME/bin/run.sh
+	fi 
+	if [ -e $A9_HOME/bin/run.sh ]; then
+		rm $A9_HOME/bin/stop.sh
+	fi
+else
+	mkdir $A9_HOME/bin
 fi
 
 awk '{gsub("YOURA9HOME", "'$A9_HOME'", $0); gsub("YOURJAVAHOME", "'$JAVA_HOME'", $0); gsub("YOURLOGHOME", "'$LOG_HOME'", $0); print}' $A9_HOME/tpl/run.sh.tpl > $A9_HOME/bin/run.sh

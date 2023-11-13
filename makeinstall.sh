@@ -1,8 +1,8 @@
 # --------------------------------------------------------
 # 설치기본위치 
 # --------------------------------------------------------
-A9_CORE_HOME=/Users/whoana/DEV/workspace-vs/a9-core
-A9_HOME=/Users/whoana/DEV/workspace-vs/a9
+A9_CORE_HOME=/Users/whoana/DEV/workspaces/vsc/a9-core
+A9_HOME=/Users/whoana/DEV/workspaces/vsc/a9
 INSTALL_HOME="${A9_HOME}/home"
 BUILD_HOME="${A9_HOME}/install-linux"
 
@@ -18,17 +18,13 @@ mvn clean package
 # --------------------------------------------------------
 # 기존 소스 삭제  
 # --------------------------------------------------------
-# rm -R ${INSTALL_HOME}/lib/a9-core-1.0.jar
-# rm -R ${INSTALL_HOME}/classes
-rm -R ${INSTALL_HOME}/a9-1.0.jar
-rm -R ${BUILD_HOME}/build-tar-src/a9-install/a9-1.0.jar
+rm -R ${INSTALL_HOME}/lib/a9-1.0.jar
+rm -R ${BUILD_HOME}/build-tar-src/a9-install/lib/a9-1.0.jar
 # --------------------------------------------------------
 # lib, classes 카피 
 # --------------------------------------------------------
-# cp ${A9_CORE_HOME}/target/a9-core-1.0.jar ${INSTALL_HOME}/lib
-# cp -R ${A9_HOME}/target/classes ${INSTALL_HOME}/
-cp ${A9_HOME}/target/a9-1.0.jar ${INSTALL_HOME}/
-cp ${A9_HOME}/target/a9-1.0.jar ${BUILD_HOME}/build-tar-src/a9-install/
+cp ${A9_HOME}/target/a9-1.0.jar ${INSTALL_HOME}/lib/
+cp ${A9_HOME}/target/a9-1.0.jar ${BUILD_HOME}/build-tar-src/a9-install/lib
 
 # --------------------------------------------------------
 # MANIFEST.MF, a9-1.0.jar 생성

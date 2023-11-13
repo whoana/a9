@@ -56,11 +56,46 @@
 			<artifactId>mint-common</artifactId>
 			<version>3.0.0</version>
 		</dependency>
-
+  
 		<dependency>
 			<groupId>apple.mint</groupId>
 			<artifactId>a9-core</artifactId>
 			<version>1.0</version>
+			<scope>comile</scope>
+		</dependency>
+
+		<!-- <dependency>
+			<groupId>rose.mary</groupId>
+		    <artifactId>t9-cache</artifactId>
+		    <version>1.0.0</version>		
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/t9-cache-1.0.0.jar</systemPath>
+		</dependency>	
+
+		<dependency>
+			<groupId>lemon.balm</groupId>
+		    <artifactId>s9-utility</artifactId>
+		    <version>1.0.0</version>		
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/s9-utility-1.0.0.jar</systemPath>
+		</dependency> -->
+ 
+		<dependency>
+			<groupId>lemon.balm</groupId>
+		    <artifactId>s9-utility</artifactId>
+		    <version>1.0.0</version>		
+		</dependency>
+	
+		<dependency>
+			<groupId>rose.mary.trace</groupId>
+		    <artifactId>t9-cache</artifactId>
+		    <version>1.0.0</version>		
+		</dependency>
+
+		<dependency>
+			<groupId>org.infinispan</groupId>
+		    <artifactId>infinispan-core</artifactId>
+		    <version>9.4.16.Final</version>		
 		</dependency>
 
 		<dependency>
@@ -74,6 +109,12 @@
 			<version>${springcloud.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-loader</artifactId>
+			<scope>comile</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -82,6 +123,28 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals><goal>exec</goal></goals>
+						<configuration>
+							<executable>jar</executable>
+							<arguments>
+								<argument>uf</argument>
+								<argument>${project.build.directory}/a9-1.0.jar</argument>
+								<argument>-C</argument>
+								<argument>${project.build.directory}/classes</argument>
+								<argument>org/springframework/boot/loader</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 	<repositories>

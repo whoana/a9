@@ -4,7 +4,7 @@
 # cd ..
 # rm a9-install.tar
 # cp ./build-tar-src/a9-install.tar .
-BUILD_TAR_HOME=/Users/whoana/DEV/workspace-vs/a9/install-linux
+BUILD_TAR_HOME=/Users/whoana/DEV/workspaces/vsc/a9/install-linux
 TAR_SRC_HOME=$BUILD_TAR_HOME/build-tar-src
 cd $TAR_SRC_HOME
 tar -cvf a9-install.tar a9-install

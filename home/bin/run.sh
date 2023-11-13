@@ -1,7 +1,6 @@
 #!/bin/sh
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home
-#export A9_HOME=/Users/whoana/DEV/workspace-vs/a9/home
-export A9_HOME=/Users/whoana/DEV/workspace-vs/a9/home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
+export A9_HOME=/Users/whoana/DEV/workspaces/vsc/a9/home
 #export ACTIVE_PROFILE=development
 export ACTIVE_PROFILE=production
 export MEM_OPTS="-Xms1024m -Xmx2048m"
